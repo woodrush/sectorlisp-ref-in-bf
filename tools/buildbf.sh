@@ -11,7 +11,7 @@ echo "elc..."
 
 echo "Cleaning the BF source code..."
 cat ./build/lisp.c.eir.bf | sed -e 's/[^][+-\,.<>]//g' > ./build/cleaned.bf
-cat ./build/cleaned.bf | tr -d '\n' > ./out/lisp.bf
+cat ./build/cleaned.bf | tr -d ':\n' > ./out/lisp.bf
 
 echo "bfopt..."
 cd elvm

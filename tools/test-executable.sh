@@ -6,6 +6,23 @@ cc -s ./build/lisp.o  -o ./out/lisp
 
 BOOTSTRAP=$(tail ./sectorlisp/lisp.lisp -n 45)
 
-echo " (QUOTE 7) " | ./out/lisp
-echo " ((LAMBDA () (QUOTE 5))) " | ./out/lisp
-echo $BOOTSTRAP | ./out/lisp
+function test_lisp () {
+    input=$1
+    expected=$2
+    echo "Case $(echo $1 | head -n 1) ..."
+
+    output=$(echo "$input" | ./out/lisp)
+    if [ "$output" != "$expected" ]; then
+        echo "Test failed!"
+        echo "$input"
+        echo "$output"
+        exit 1
+    fi
+    echo "Passed."
+}
+
+test_lisp "(QUOTE 5)" "5"
+test_lisp "((LAMBDA () (QUOTE 7)))" "7"
+test_lisp "$BOOTSTRAP" "A"
+
+echo "All tests have passed."
