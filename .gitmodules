@@ -1,0 +1,8 @@
+[submodule "elvm"]
+	path = elvm
+	url = https://github.com/woodrush/elvm
+	branch = submodule
+[submodule "sectorlisp"]
+	path = sectorlisp
+	url = https://github.com/woodrush/sectorlisp
+	branch = bf
