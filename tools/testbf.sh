@@ -8,8 +8,9 @@ function test_lisp () {
     expected=$2
     echo "Case $(echo $1 | head -n 1) ..."
 
-    output=$(echo "$input" | ./out/lisp.bf.exe)
-    if [ "$output" != "$expected" ]; then
+    output_bf=$(echo "$input" | ./out/lisp.bf.exe)
+    output_exe=$(echo "$input" | ./out/lisp)
+    if [ "$output_bf" != "$output_exe" ] || [ "$output_bf" != "$expected" ]; then
         echo "Test failed!"
         echo "$input"
         echo "$output"

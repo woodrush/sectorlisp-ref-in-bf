@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
 
-cc -w -Os   -c -o ./build/lisp.o ./sectorlisp/lisp.c
+cc -w -Os   -c -o ./build/lisp.o ./sectorlisp/lisp_bf.c
 cc -s ./build/lisp.o  -o ./out/lisp
+
+cd sectorlisp && make
+cd ..
 
 BOOTSTRAP=$(tail ./sectorlisp/lisp.lisp -n 45)
 
@@ -11,11 +14,13 @@ function test_lisp () {
     expected=$2
     echo "Case $(echo $1 | head -n 1) ..."
 
-    output=$(echo "$input" | ./out/lisp)
-    if [ "$output" != "$expected" ]; then
+    output_modified=$(echo "$input" | ./out/lisp)
+    output_orig=$(echo "$input" | ./sectorlisp/lisp)
+    if [ "$output_modified" != "$output_orig" ] || [ "$output_modified" != "$expected" ]; then
         echo "Test failed!"
-        echo "$input"
-        echo "$output"
+        echo "Input: $input"
+        echo "Output (modified): $output"
+        echo "Output (original): $output_orig"
         exit 1
     fi
     echo "Passed."
