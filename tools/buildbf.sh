@@ -7,10 +7,10 @@ mkdir -p out
 echo "8cc..."
 ./elvm/out/8cc -S -I. -Ilibc -Iout -o build/lisp.c.eir sectorlisp/lisp_bf.c
 echo "elc..."
-./elvm/out/elc -bf build/lisp.c.eir > build/lisp.c.eir.bf
+./elvm/out/elc -bf ./build/lisp.c.eir > build/lisp.c.eir.bf
 
 echo "Cleaning the BF source code..."
-cat ./build/lisp.c.eir.bf | sed -e 's/[^][+-\,.<>]//g' > ./build/cleaned.bf
+cat ./build/lisp.c.eir.bf | sed -e 's/[^][+-<>.\,]//g' > ./build/cleaned.bf
 cat ./build/cleaned.bf | tr -d ':\n' > ./out/lisp.bf
 
 echo "bfopt..."
